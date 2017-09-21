@@ -13,6 +13,6 @@ import com.github.tntgamestv.starbuzz.PrimaryOrder;
 public class Hausmarke extends PrimaryOrder {
 
 	public Hausmarke() {
-		super("Hausmarke", 2);
+		super("Hausmarke", 2.0);
 	}
 }

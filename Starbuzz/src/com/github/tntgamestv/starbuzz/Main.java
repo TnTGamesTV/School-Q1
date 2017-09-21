@@ -3,6 +3,9 @@
  */
 package com.github.tntgamestv.starbuzz;
 
+import com.github.tntgamestv.starbuzz.primary.Hausmarke;
+import com.github.tntgamestv.starbuzz.secondary.Zucker;
+
 /**
  * @author TnTGamesTV
  * Project: Starbuzz
@@ -10,11 +13,14 @@ package com.github.tntgamestv.starbuzz;
  */
 public class Main {
 
-	/**
-	 * 
-	 */
-	public Main() {
-		// TODO Auto-generated constructor stub
-	}
+	public static void main(String[] args) {
+		MainOrder main = new MainOrder();
+		
+		main.setPrimaryOrder(new Hausmarke());
 
+		main.addSecondaryOrder(new Zucker());
+		main.addSecondaryOrder(new Zucker());
+		
+		System.out.println(main.getTotal());
+	}
 }

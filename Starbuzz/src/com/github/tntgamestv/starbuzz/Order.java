@@ -3,40 +3,30 @@
  */
 package com.github.tntgamestv.starbuzz;
 
-import java.util.List;
-
 /**
- * @author TnTGamesTV
- * Project: Starbuzz
- * Date: 08-09-2017
+ * @author TnTGamesTV Project: Starbuzz Date: 21-09-2017
  */
 public class Order {
 
-	private PrimaryOrder primaryOrder;
-	
-	private List<SecondaryOrder> secondarOrders;
-	
-	public Order() {
-		
+	private double	price;
+	private String	name;
+
+	public Order(String name, double price) {
+		this.name = name;
+		this.price = price;
 	}
 
-	public void setPrimaryOrder(PrimaryOrder primaryOrder) {
-		this.primaryOrder = primaryOrder;
+	/**
+	 * @return the price
+	 */
+	public double getPrice() {
+		return price;
 	}
-	
-	public void addSecondaryOrder(SecondaryOrder secondaryOrder) {
-		this.secondarOrders.add(secondaryOrder);
-	}
-	
-	public double getTotal() {
-		double total = 0;
-		
-		total += this.primaryOrder.getPrice();
-		
-		for(SecondaryOrder secondaryOrder : this.secondarOrders) {
-			total += secondaryOrder.getPrice();
-		}
-		
-		return total;
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
 	}
 }
