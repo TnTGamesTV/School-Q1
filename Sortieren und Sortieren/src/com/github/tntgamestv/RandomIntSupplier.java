@@ -3,6 +3,7 @@
  */
 package com.github.tntgamestv;
 
+import java.util.Random;
 import java.util.function.IntSupplier;
 
 /**
@@ -10,18 +11,50 @@ import java.util.function.IntSupplier;
  */
 public class RandomIntSupplier implements IntSupplier {
 
-	private int	start;
-	private int	end;
-
-	public RandomIntSupplier(int start, int end) {
-		this.start = start;
-		this.end = end;
-	}
+	/**
+	 * The start and end of the supplied numbers
+	 */
+	private int		start;
+	private int		end;
 
 	/*
-	 * (non-Javadoc)
+	 * All numbers from this RandomIntSupplier are coming from this randomizer
+	 */
+	private Random	randomizer;
+
+	/**
+	 * An endless stream of numbers that are randomly generated
+	 * 
+	 * @param start
+	 *            the minimum value
+	 * @param end
+	 *            the maximum value
+	 */
+	public RandomIntSupplier(int start, int end) {
+		this(start, end, System.currentTimeMillis());
+	}
+
+	/**
+	 * An endless stream of numbers that are randomly generated
+	 * 
+	 * @param start
+	 *            the minimum value
+	 * @param end
+	 *            the maximum value
+	 * @param seed
+	 *            the seed for the randomizer
+	 */
+	public RandomIntSupplier(int start, int end, long seed) {
+		this.start = start;
+		this.end = end;
+		this.randomizer = new Random(seed);
+	}
+
+	/**
+	 * Returns the next number
 	 * 
 	 * @see java.util.function.IntSupplier#getAsInt()
+	 * @return the next int between start and end
 	 */
 	@Override
 	public int getAsInt() {
