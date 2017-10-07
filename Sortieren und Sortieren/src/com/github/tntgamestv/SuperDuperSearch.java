@@ -6,7 +6,6 @@ package com.github.tntgamestv;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.IntStream;
 import java.util.stream.Collectors;
 
 /**
@@ -14,12 +13,10 @@ import java.util.stream.Collectors;
  */
 public class SuperDuperSearch {
 
-	public static final int NULL_VALUE = Integer.MIN_VALUE;
-
 	public static void main(String[] args) {
 		List<Integer> input = Arrays.asList(8, 18, 88, 5, 42, 69, 240, 25);
 		List<Integer> output = new ArrayList<>();
-		input.forEach(v -> output.add(NULL_VALUE));
+		input.forEach(v -> output.add(null));
 
 		sort(input, 0, output);
 
@@ -32,15 +29,13 @@ public class SuperDuperSearch {
 
 			List<Integer> left = input.stream().filter(v -> v < pick).collect(Collectors.toList());
 			List<Integer> right = input.stream().filter(v -> v > pick).collect(Collectors.toList());
-			
+
 			output.set(left.size() + distance, pick);
 
 			sort(left, distance, output);
 			sort(right, left.size() + distance + 1, output);
 		} else if (input.size() == 1) {
-			int pick = input.get(0);
-
-			output.set(distance, pick);
+			output.set(distance, input.get(0));
 		}
 	}
 }
