@@ -6,11 +6,30 @@ import java.util.List;
  * @author Finn Tegeler
  */
 public class SelbstlernenRekursiv {
-
+	
+	/**
+	 * Searches for a given integer using binary search
+	 * @param input the list of integers (haystack)
+	 * @param seachFor the integer (needle)
+	 * @return the position (index) of the given needle
+	 */
 	public int binarySearchWrapper(List<Integer> input, int seachFor) {
-		return binarySearch(input, seachFor, 0, input.size());
+		return binarySearch(input, seachFor, 0, input.size() - 1);
 	}
 
+	/**
+	 * Searches for a given integer using binary search
+	 * 
+	 * @param input
+	 *            the list of integers (haystack)
+	 * @param searchFor
+	 *            the integer (needle)
+	 * @param min
+	 *            the first index (global)
+	 * @param max
+	 *            the last index (global)
+	 * @return the position (index) of the given needle
+	 */
 	public int binarySearch(List<Integer> input, int searchFor, int min, int max) {
 		int result = -1;
 		int middle = Math.round((min + max) / 2);
