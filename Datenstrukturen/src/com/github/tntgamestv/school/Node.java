@@ -8,7 +8,7 @@ package com.github.tntgamestv.school;
  * Project: Datenstrukturen
  * Date: 07-11-2017
  */
-public class Node<T extends Object> {
+public class Node<T> {
 	
 	private Node<T> next;
 	private T object;

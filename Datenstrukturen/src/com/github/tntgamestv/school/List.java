@@ -44,7 +44,12 @@ public class List<T> {
 			currenNode = currenNode.getNext();
 		}
 	}
-
+	
+	/**
+	 * Returns the object at
+	 * @param i
+	 * @return
+	 */
 	public T get(int i) {
 		Node<T> currenNode = first;
 
