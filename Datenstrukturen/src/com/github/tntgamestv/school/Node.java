@@ -51,5 +51,5 @@ public class Node<T> {
 	 */
 	public void setObject(T object) {
 		this.object = object;
-	}
+	}	
 }

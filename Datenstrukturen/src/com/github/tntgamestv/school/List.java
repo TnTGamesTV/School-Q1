@@ -18,8 +18,40 @@ public class List<T> {
 		size = 0;
 	}
 
-	protected Node<T> getFirst() {
-		return first;
+	public void remove(Node<T> node) {
+		Node<T> next = node.next;
+		Node<T> prev = this.getPrevious(node);
+
+		if (node == last) {
+			// Set prev node to last and update pointer
+			last = prev;
+			prev.setNext(null);
+		} else if (node == first) {
+			// Set next node to first and update pointer
+			node.setNext(null);
+			first = next;
+		} else {
+			// Update prev node pointer to next node
+			prev.setNext(next);
+			node.setNext(null);
+		}
+	}
+
+	protected Node<T> getPrevious(Node<T> next) {
+		Node<T> currentNode = this.first;
+		@SuppressWarnings("unused")
+		int i = 0;
+		while (currentNode != null && currentNode != next && !currentNode.isLast()) {
+			if (currentNode.next == next) {
+				// System.out.println("GetBefor iteration. I: " + i);
+				return currentNode;
+			} else {
+				currentNode = currentNode.next;
+				i++;
+			}
+		}
+
+		return null;
 	}
 
 	public void add(T object) {
@@ -34,7 +66,8 @@ public class List<T> {
 		}
 		size++;
 
-		//System.out.println("Add action @" + (size - 1) + " - Node: " + object.toString());
+		// System.out.println("Add action @" + (size - 1) + " - Node: " +
+		// object.toString());
 	}
 
 	public void set(int i, T object) {
@@ -120,10 +153,10 @@ public class List<T> {
 	public int size() {
 		return size;
 	}
-	
+
 	public void debug() {
 		Node<T> currentNode = first;
-		while(currentNode != null) {
+		while (currentNode != null) {
 			Log.d("Node: " + currentNode.getObject().toString());
 			currentNode = currentNode.getNext();
 		}

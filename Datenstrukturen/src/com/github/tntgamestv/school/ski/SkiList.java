@@ -10,7 +10,7 @@ public class SkiList extends InsertList<SkiInfo> {
 
 	@Override
 	public void add(SkiInfo info) {
-		if (this.getFirst() != null && size >= 1) {
+		if (this.first != null && size >= 1) {
 			Node<SkiInfo> currentNode = this.first;
 
 			while (currentNode != null && currentNode.getObject().getTime() < info.getTime()) {

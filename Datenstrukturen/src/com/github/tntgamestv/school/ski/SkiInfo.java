@@ -3,7 +3,7 @@ package com.github.tntgamestv.school.ski;
 /**
  * @author Finn Tegeler
  */
-public class SkiInfo {
+public class SkiInfo implements Comparable<SkiInfo>{
 
 	private String	name;
 	private long	time;
@@ -46,5 +46,10 @@ public class SkiInfo {
 	 */
 	public void setTime(long time) {
 		this.time = time;
+	}
+
+	@Override
+	public int compareTo(SkiInfo o) {
+		return time > o.time ? 1 : -1;
 	}
 }
