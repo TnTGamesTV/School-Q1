@@ -30,10 +30,11 @@ public class List<T> {
 			last = node;
 		} else {
 			last.setNext(node);
+			last = node;
 		}
 		size++;
 
-		System.out.println("Add action @" + (size - 1) + " - Node: " + object.toString());
+		//System.out.println("Add action @" + (size - 1) + " - Node: " + object.toString());
 	}
 
 	public void set(int i, T object) {
@@ -89,7 +90,7 @@ public class List<T> {
 
 			return currentNode;
 		} else {
-			throw new IllegalArgumentException("");
+			throw new IllegalArgumentException("Index must be greater then or equal to ");
 		}
 	}
 
@@ -118,5 +119,13 @@ public class List<T> {
 
 	public int size() {
 		return size;
+	}
+	
+	public void debug() {
+		Node<T> currentNode = first;
+		while(currentNode != null) {
+			Log.d("Node: " + currentNode.getObject().toString());
+			currentNode = currentNode.getNext();
+		}
 	}
 }

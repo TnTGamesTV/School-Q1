@@ -22,8 +22,8 @@ public class InsertList<T> extends List<T> implements Insertable<T> {
 			newNode.next = posNode;
 			size++;
 
-			System.out.println("Insert action @" + i + ", posNode: " + posNode.getObject().toString() + ", beforNode: "
-					+ beforNode.getObject().toString());
+			/*System.out.println("Insert action @" + i + ", posNode: " + posNode.getObject().toString() + ", beforNode: "
+					+ beforNode.getObject().toString());*/
 		} else {
 			throw new IndexOutOfBoundsException("Index must be smaller then size: " + i);
 		}

@@ -1,5 +1,7 @@
 package com.github.tntgamestv.school.ski;
 
+import com.github.tntgamestv.school.Log;
+
 /**
  * @author Finn Tegeler
  */
@@ -18,16 +20,9 @@ public class Main {
 		list.add(info3); // Add @2
 		list.add(info4); // Insert @1
 
-		/**
-		 * info1 -> 0; info2 -> 2; info3 -> 3; info4 -> 1;
-		 */
-
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
-		System.out.println("" + list.get(3).getName());
+		list.forEach((v) ->
+		{
+			Log.d(v.toString());
+		});
 	}
 }
