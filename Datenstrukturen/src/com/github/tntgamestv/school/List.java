@@ -66,8 +66,7 @@ public class List<T> {
 		}
 		size++;
 
-		// System.out.println("Add action @" + (size - 1) + " - Node: " +
-		// object.toString());
+		System.out.println("Add action @" + (size - 1) + " - Node: " + object.toString());
 	}
 
 	public void set(int i, T object) {
@@ -135,7 +134,7 @@ public class List<T> {
 			currentNode = currentNode.getNext();
 			i++;
 		}
-
+		
 		if (currentNode != null) {
 			return i;
 		}

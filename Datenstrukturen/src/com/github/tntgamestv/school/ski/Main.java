@@ -1,6 +1,8 @@
 package com.github.tntgamestv.school.ski;
 
+import com.github.tntgamestv.school.InsertList;
 import com.github.tntgamestv.school.Log;
+import com.github.tntgamestv.school.SelectionSort;
 
 /**
  * @author Finn Tegeler
@@ -9,6 +11,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		SkiList list = new SkiList();
+		InsertList<SkiInfo> unsortedList = new InsertList<>();
 
 		SkiInfo info1 = new SkiInfo("Max Mustermann", 100);
 		SkiInfo info2 = new SkiInfo("Erika Mustermann", 200);
@@ -20,9 +23,21 @@ public class Main {
 		list.add(info3); // Add @2
 		list.add(info4); // Insert @1
 
-		list.forEach((v) ->
+		unsortedList.add(info2);
+		unsortedList.add(info1);
+		unsortedList.add(info4);
+		unsortedList.add(info3);
+
+		new SelectionSort<SkiInfo>().sort(unsortedList);
+
+		/*list.forEach((v) ->
 		{
 			Log.d(v.toString());
+		});*/
+
+		unsortedList.forEach((v) ->
+		{
+			System.out.println(v.toString());
 		});
 	}
 }

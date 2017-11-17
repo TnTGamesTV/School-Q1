@@ -7,5 +7,5 @@ public interface Insertable<T> {
 
 	public void insert(int i, T object);
 
-	void insert(int i, Node<T> node);
+	void insertNode(int i, Node<T> node);
 }

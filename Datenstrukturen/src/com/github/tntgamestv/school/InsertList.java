@@ -32,14 +32,7 @@ public class InsertList<T> extends List<T> implements Insertable<T> {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.github.tntgamestv.school.Insertable#insert(int,
-	 * com.github.tntgamestv.school.Node)
-	 */
-	@Override
-	public void insert(int i, Node<T> newNode) {
+	public void insertNode(int i, Node<T> newNode) {
 		if (size == 0 || size == i) {
 			super.add(newNode.getObject());
 			return;
@@ -52,6 +45,9 @@ public class InsertList<T> extends List<T> implements Insertable<T> {
 			beforNode.next = newNode;
 			newNode.next = posNode;
 			size++;
+			System.out.println("Insert action @" + i + ", posNode: " + posNode.getObject().toString() + ", beforNode: "
+					+ beforNode.getObject().toString());
+
 		} else {
 			throw new IndexOutOfBoundsException("Index must be smaller then size: " + i);
 		}
