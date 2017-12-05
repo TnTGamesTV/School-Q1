@@ -42,6 +42,15 @@ public class Stack<T> {
 		size++;
 	}
 	
+	public void forEach(LambdaIterable<T> iterable) {
+		StackNode<T> current = top;
+		
+		while(current != null && current.getPrevious() != null) {
+			iterable.iterate(current.getContent());
+			current = current.getPrevious();
+		}
+	}
+	
 	public boolean isEmpty() {
 		return size == 0;
 	}

@@ -21,7 +21,66 @@ public class Main {
 		a.push(new Wagon(14));
 		
 		//Alg
-		execute(a, b, c);
+		execute2(a, b, c);
+		
+		System.out.println("Gleis A:");
+		a.getContent().forEach((v) -> System.out.println(v.getId()));
+		
+		System.out.println("Gleis B:");
+		b.getContent().forEach((v) -> System.out.println(v.getId()));
+		
+		System.out.println("Gleis C:");
+		c.getContent().forEach((v) -> System.out.println(v.getId()));
+	}
+	
+	private static void execute2(Gleis x, Gleis y, Gleis z) {
+		Gleis a = x.getRole() == Gleis.ROLE_START ? x : y.getRole() == Gleis.ROLE_START ? y : z;
+		Gleis b = x.getRole() == Gleis.ROLE_CACHE ? x : y.getRole() == Gleis.ROLE_CACHE ? y : z;
+		Gleis c = x.getRole() == Gleis.ROLE_END ? x : y.getRole() == Gleis.ROLE_END ? y : z;
+		
+		//input A
+		//Kleinsten finden und alle auf B schieben
+		//Iterieren und Kleinsten auf A, Rest auf C
+		//Dann solange C nicht leer ist
+		//	Den nächst kleineren in C finden und alles auf B schieben
+		//	Iterieren und Kleinsten auf A, Rest auf C
+		
+		Wagon smallestFirst = moveAndFindSmallest(a, b);
+		seperateSmallestFromOthers(b, c, a, smallestFirst);
+		
+		while(!c.isEmpty()) {
+			Wagon smallestNext = moveAndFindSmallest(c, b);
+			seperateSmallestFromOthers(b, c, a, smallestNext);
+		}
+	}
+	
+	private static Wagon moveAndFindSmallest(Gleis from, Gleis to) {
+		Wagon smallest = from.pop();
+		to.push(smallest);
+		
+		while(!from.isEmpty()) {
+			Wagon current = from.pop();
+			
+			if(smallest.getId() >= current.getId()) {
+				smallest = current;
+			}
+			
+			to.push(current);
+		}
+		
+		return smallest;
+	}
+	
+	private static void seperateSmallestFromOthers(Gleis from, Gleis cache, Gleis to, Wagon smallest) {
+		while(!from.isEmpty()) {
+			Wagon current = from.pop();
+			
+			if(current.getId() == smallest.getId()) {
+				to.push(current);
+			}else {
+				cache.push(current);
+			}
+		}
 	}
 	
 	private static void execute(Gleis x, Gleis y, Gleis z) {
