@@ -99,7 +99,7 @@ public class BinaryTree<T extends Comparable<T>> {
 	}
 
 	public void insert(T content) {
-
+		this.insert(this, content);
 	}
 
 	public void setContent(T pContent) {
