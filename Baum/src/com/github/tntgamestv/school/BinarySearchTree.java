@@ -1,5 +1,8 @@
 package com.github.tntgamestv.school;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Mithilfe der generischen Klasse BinaryTree koennen beliebig viele
  * Inhaltsobjekte vom Typ ContentType in einem Binaerbaum verwaltet werden. Ein
@@ -7,7 +10,7 @@ package com.github.tntgamestv.school;
  * Inhaltsobjekt sowie einen linken und einen rechten Teilbaum, die ebenfalls
  * Objekte der generischen Klasse BinaryTree sind.
  */
-public class BinaryTree<T extends Comparable<T>> {
+public class BinarySearchTree<T extends Comparable<T>> {
 
 	/* --------- Anfang der privaten inneren Klasse -------------- */
 
@@ -19,27 +22,27 @@ public class BinaryTree<T extends Comparable<T>> {
 	private class BTNode<T extends Comparable<T>> {
 
 		private T				content;
-		private BinaryTree<T>	left, right;
+		private BinarySearchTree<T>	left, right;
 
 		public BTNode(T pContent) {
 			// Der Knoten hat einen linken und einen rechten Teilbaum, die
 			// beide von null verschieden sind. Also hat ein Blatt immer zwei
 			// leere Teilbaeume unter sich.
 			this.content = pContent;
-			left = new BinaryTree<T>();
-			right = new BinaryTree<T>();
+			left = new BinarySearchTree<T>();
+			right = new BinarySearchTree<T>();
 		}
 
 	}
 
 	/* ----------- Ende der privaten inneren Klasse -------------- */
 
-	private BinaryTree<T>.BTNode<T> node;
+	private BinarySearchTree<T>.BTNode<T> node;
 
 	/**
 	 * Nach dem Aufruf des Konstruktors existiert ein leerer Binaerbaum.
 	 */
-	public BinaryTree() {
+	public BinarySearchTree() {
 		this.node = null;
 	}
 
@@ -52,7 +55,7 @@ public class BinaryTree<T extends Comparable<T>> {
 	 * @param pContent
 	 *            das Inhaltsobjekt des Wurzelknotens vom Typ ContentType
 	 */
-	public BinaryTree(T pContent) {
+	public BinarySearchTree(T pContent) {
 		if (pContent != null) {
 			this.node = new BTNode<T>(pContent);
 		} else {
@@ -75,18 +78,18 @@ public class BinaryTree<T extends Comparable<T>> {
 	 * @param pRightTree
 	 *            der rechte Teilbaum vom Typ BinaryTree<ContentType>
 	 */
-	public BinaryTree(T pContent, BinaryTree<T> pLeftTree, BinaryTree<T> pRightTree) {
+	public BinarySearchTree(T pContent, BinarySearchTree<T> pLeftTree, BinarySearchTree<T> pRightTree) {
 		if (pContent != null) {
 			this.node = new BTNode<T>(pContent);
 			if (pLeftTree != null) {
 				this.node.left = pLeftTree;
 			} else {
-				this.node.left = new BinaryTree<T>();
+				this.node.left = new BinarySearchTree<T>();
 			}
 			if (pRightTree != null) {
 				this.node.right = pRightTree;
 			} else {
-				this.node.right = new BinaryTree<T>();
+				this.node.right = new BinarySearchTree<T>();
 			}
 		} else {
 			// Da der Inhalt null ist, wird ein leerer BinarySearchTree erzeugt.
@@ -106,8 +109,8 @@ public class BinaryTree<T extends Comparable<T>> {
 		if (pContent != null) {
 			if (this.isEmpty()) {
 				node = new BTNode<T>(pContent);
-				this.node.left = new BinaryTree<T>();
-				this.node.right = new BinaryTree<T>();
+				this.node.left = new BinarySearchTree<T>();
+				this.node.right = new BinarySearchTree<T>();
 			}
 			this.node.content = pContent;
 		}
@@ -121,19 +124,19 @@ public class BinaryTree<T extends Comparable<T>> {
 		}
 	}
 
-	public void setLeftTree(BinaryTree<T> pTree) {
+	public void setLeftTree(BinarySearchTree<T> pTree) {
 		if (!this.isEmpty() && pTree != null) {
 			this.node.left = pTree;
 		}
 	}
 
-	public void setRightTree(BinaryTree<T> pTree) {
+	public void setRightTree(BinarySearchTree<T> pTree) {
 		if (!this.isEmpty() && pTree != null) {
 			this.node.right = pTree;
 		}
 	}
 
-	public BinaryTree<T> getLeftTree() {
+	public BinarySearchTree<T> getLeftTree() {
 		if (!this.isEmpty()) {
 			return this.node.left;
 		} else {
@@ -141,7 +144,7 @@ public class BinaryTree<T extends Comparable<T>> {
 		}
 	}
 
-	public BinaryTree<T> getRightTree() {
+	public BinarySearchTree<T> getRightTree() {
 		if (!this.isEmpty()) {
 			return this.node.right;
 		} else {
@@ -149,7 +152,7 @@ public class BinaryTree<T extends Comparable<T>> {
 		}
 	}
 
-	public void preorder(BinaryTree<T> b, ITraverse<T> iinterface) {
+	public void preorder(BinarySearchTree<T> b, ITraverse<T> iinterface) {
 		if (!b.isEmpty()) {
 			if (iinterface.traverse(b)) return;
 			if (b.getLeftTree() != null) inorder(b.getLeftTree(), iinterface);
@@ -158,7 +161,7 @@ public class BinaryTree<T extends Comparable<T>> {
 		return;
 	}
 
-	public void inorder(BinaryTree<T> b, ITraverse<T> iinterface) {
+	public void inorder(BinarySearchTree<T> b, ITraverse<T> iinterface) {
 		if (!b.isEmpty()) {
 			if (b.getLeftTree() != null) inorder(b.getLeftTree(), iinterface);
 			if (iinterface.traverse(b)) return;
@@ -167,7 +170,23 @@ public class BinaryTree<T extends Comparable<T>> {
 		return;
 	}
 
-	public void postorder(BinaryTree<T> b, ITraverse<T> iinterface) {
+	public List<T> inorder(BinarySearchTree<T> b){
+		List<T> output = new ArrayList<>();
+		
+		this.inorder(b, new ITraverse<T>() {
+
+			@Override
+			public boolean traverse(BinarySearchTree<T> tree) {
+				if(tree.getContent() != null) {
+					output.add(tree.getContent());
+				}
+				return false;
+			}});
+		
+		return output;
+	}
+	
+	public void postorder(BinarySearchTree<T> b, ITraverse<T> iinterface) {
 		if (!b.isEmpty()) {
 			if (b.getLeftTree() != null) inorder(b.getLeftTree(), iinterface);
 			if (b.getRightTree() != null) inorder(b.getRightTree(), iinterface);
@@ -175,8 +194,33 @@ public class BinaryTree<T extends Comparable<T>> {
 		}
 		return;
 	}
+	
+	public void delete(T value) {
+		this.inorder(this, new ITraverse<T>() {
 
-	public void insert(BinaryTree<T> b, T input) {
+			@Override
+			public boolean traverse(BinarySearchTree<T> tree) {
+				if(tree.getContent() != null && tree.getContent().equals(value)) {
+					BinarySearchTree.this.delete(tree.getContent());
+					return true;
+				}
+				return false;
+			}});
+	}
+	
+	public void delete(BinarySearchTree<T> value) {
+		BinarySearchTree<T> left = value.getLeftTree();
+		BinarySearchTree<T> right = value.getRightTree();
+		
+		if(left.isEmpty()) return;
+		
+		List<T> leftNodes = left.inorder(left);
+		T node = leftNodes.get(leftNodes.size() - 1);
+		
+		leftNodes.stream().max((a,b) -> a.compareTo(b)).ifPresent(System.out::println);
+	}
+	
+	public void insert(BinarySearchTree<T> b, T input) {
 		if (b.isEmpty()) {
 			b.setContent(input);
 		} else {

@@ -9,5 +9,5 @@ package com.github.tntgamestv.school;
  */
 public interface ITraverse<T extends Comparable<T>> {
 
-	boolean traverse(BinaryTree<T> tree);
+	boolean traverse(BinarySearchTree<T> tree);
 }

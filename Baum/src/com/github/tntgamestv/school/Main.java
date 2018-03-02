@@ -11,31 +11,54 @@ import java.util.regex.Pattern;
 public class Main {
 
 	public static void main(String[] args) {
+		BinarySearchTree<Informatiker> tree = new BinarySearchTree<>();
+
+		Informatiker i1 = new Informatiker("A", 01, 01, 2000);
+		Informatiker i2 = new Informatiker("B", 01, 01, 1999);
+		Informatiker i3 = new Informatiker("C", 01, 01, 2001);
+
+		tree.insert(i1);
+		tree.insert(i2);
+		tree.insert(i3);
+		
+		tree.delete(i2);
+		
+		tree.inorder(tree, new ITraverse<Informatiker>() {
+			
+			@Override
+			public boolean traverse(BinarySearchTree<Informatiker> tree) {
+				System.out.println(tree.getContent().getName()+ ": " + tree.getContent().getDay() + "." + tree.getContent().getMonth() + "." + tree.getContent().getYear());
+				return false;
+			}
+		});
+	}
+	
+	public static void main2(String[] args) {
 		MorseTree binTree = new MorseTree();
 		binTree.setContent("");
 
-		BinaryTree<String> e = new BinaryTree<String>("E");
-		BinaryTree<String> t = new BinaryTree<String>("T");
+		BinarySearchTree<String> e = new BinarySearchTree<String>("E");
+		BinarySearchTree<String> t = new BinarySearchTree<String>("T");
 		binTree.setLeftTree(e);
 		binTree.setRightTree(t);
 
-		BinaryTree<String> i = new BinaryTree<String>("I");
-		BinaryTree<String> a = new BinaryTree<String>("A");
-		BinaryTree<String> n = new BinaryTree<String>("N");
-		BinaryTree<String> m = new BinaryTree<String>("M");
+		BinarySearchTree<String> i = new BinarySearchTree<String>("I");
+		BinarySearchTree<String> a = new BinarySearchTree<String>("A");
+		BinarySearchTree<String> n = new BinarySearchTree<String>("N");
+		BinarySearchTree<String> m = new BinarySearchTree<String>("M");
 		e.setLeftTree(i);
 		e.setRightTree(a);
 		t.setLeftTree(n);
 		t.setRightTree(m);
 
-		BinaryTree<String> s = new BinaryTree<String>("S");
-		BinaryTree<String> u = new BinaryTree<String>("U");
-		BinaryTree<String> r = new BinaryTree<String>("R");
-		BinaryTree<String> w = new BinaryTree<String>("W");
-		BinaryTree<String> d = new BinaryTree<String>("D");
-		BinaryTree<String> k = new BinaryTree<String>("K");
-		BinaryTree<String> g = new BinaryTree<String>("Q");
-		BinaryTree<String> o = new BinaryTree<String>("O");
+		BinarySearchTree<String> s = new BinarySearchTree<String>("S");
+		BinarySearchTree<String> u = new BinarySearchTree<String>("U");
+		BinarySearchTree<String> r = new BinarySearchTree<String>("R");
+		BinarySearchTree<String> w = new BinarySearchTree<String>("W");
+		BinarySearchTree<String> d = new BinarySearchTree<String>("D");
+		BinarySearchTree<String> k = new BinarySearchTree<String>("K");
+		BinarySearchTree<String> g = new BinarySearchTree<String>("Q");
+		BinarySearchTree<String> o = new BinarySearchTree<String>("O");
 		i.setLeftTree(s);
 		i.setRightTree(u);
 		a.setLeftTree(r);
@@ -45,22 +68,22 @@ public class Main {
 		m.setLeftTree(g);
 		m.setRightTree(o);
 
-		BinaryTree<String> h = new BinaryTree<String>("H");
-		BinaryTree<String> v = new BinaryTree<String>("V");
-		BinaryTree<String> f = new BinaryTree<String>("F");
-		BinaryTree<String> ü = new BinaryTree<String>("Ü");
-		BinaryTree<String> l = new BinaryTree<String>("L");
-		BinaryTree<String> ä = new BinaryTree<String>("Ä");
-		BinaryTree<String> p = new BinaryTree<String>("P");
-		BinaryTree<String> j = new BinaryTree<String>("J");
-		BinaryTree<String> b = new BinaryTree<String>("B");
-		BinaryTree<String> x = new BinaryTree<String>("X");
-		BinaryTree<String> c = new BinaryTree<String>("C");
-		BinaryTree<String> y = new BinaryTree<String>("Y");
-		BinaryTree<String> q = new BinaryTree<String>("Q");
-		BinaryTree<String> z = new BinaryTree<String>("Z");
-		BinaryTree<String> ö = new BinaryTree<String>("Ö");
-		BinaryTree<String> ch = new BinaryTree<String>("CH");
+		BinarySearchTree<String> h = new BinarySearchTree<String>("H");
+		BinarySearchTree<String> v = new BinarySearchTree<String>("V");
+		BinarySearchTree<String> f = new BinarySearchTree<String>("F");
+		BinarySearchTree<String> ü = new BinarySearchTree<String>("Ü");
+		BinarySearchTree<String> l = new BinarySearchTree<String>("L");
+		BinarySearchTree<String> ä = new BinarySearchTree<String>("Ä");
+		BinarySearchTree<String> p = new BinarySearchTree<String>("P");
+		BinarySearchTree<String> j = new BinarySearchTree<String>("J");
+		BinarySearchTree<String> b = new BinarySearchTree<String>("B");
+		BinarySearchTree<String> x = new BinarySearchTree<String>("X");
+		BinarySearchTree<String> c = new BinarySearchTree<String>("C");
+		BinarySearchTree<String> y = new BinarySearchTree<String>("Y");
+		BinarySearchTree<String> q = new BinarySearchTree<String>("Q");
+		BinarySearchTree<String> z = new BinarySearchTree<String>("Z");
+		BinarySearchTree<String> ö = new BinarySearchTree<String>("Ö");
+		BinarySearchTree<String> ch = new BinarySearchTree<String>("CH");
 		s.setLeftTree(h);
 		s.setRightTree(v);
 		u.setLeftTree(f);

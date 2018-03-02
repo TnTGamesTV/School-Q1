@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author TnTGamesTV Project: Bäume Date: 22-02-2018
  */
-public class MorseTree extends BinaryTree<String> {
+public class MorseTree extends BinarySearchTree<String> {
 
 	public enum Type {
 		SHORT("."), LONG("-");
@@ -26,7 +26,7 @@ public class MorseTree extends BinaryTree<String> {
 	}
 
 	public String findChar(List<Type> input) {
-		BinaryTree<String> current = this;
+		BinarySearchTree<String> current = this;
 
 		for (Type t : input) {
 			System.out.println(t.symbol);
@@ -44,7 +44,7 @@ public class MorseTree extends BinaryTree<String> {
 		return result;
 	}
 
-	private void findTypes(BinaryTree<String> tree, List<Type> result, List<Type> tmp, String s) {
+	private void findTypes(BinarySearchTree<String> tree, List<Type> result, List<Type> tmp, String s) {
 		if (tree.getContent().equals(s)) {
 			result.addAll(tmp);
 			return;
