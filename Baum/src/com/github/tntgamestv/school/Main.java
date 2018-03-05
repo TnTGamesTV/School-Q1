@@ -21,6 +21,10 @@ public class Main {
 		tree.insert(i2);
 		tree.insert(i3);
 
+		GraphicalTreeWrapper<Informatiker> wrapper = new GraphicalTreeWrapper<>(tree);
+
+		wrapper.display();
+
 		// tree.delete(i2);
 
 		// tree.inorder(tree, new ITraverse<Informatiker>() {
