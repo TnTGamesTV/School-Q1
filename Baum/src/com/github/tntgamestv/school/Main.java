@@ -20,19 +20,28 @@ public class Main {
 		tree.insert(i1);
 		tree.insert(i2);
 		tree.insert(i3);
-		
-		tree.delete(i2);
-		
-		tree.inorder(tree, new ITraverse<Informatiker>() {
-			
-			@Override
-			public boolean traverse(BinarySearchTree<Informatiker> tree) {
-				System.out.println(tree.getContent().getName()+ ": " + tree.getContent().getDay() + "." + tree.getContent().getMonth() + "." + tree.getContent().getYear());
-				return false;
-			}
-		});
+
+		// tree.delete(i2);
+
+		// tree.inorder(tree, new ITraverse<Informatiker>() {
+		//
+		// @Override
+		// public boolean traverse(BinarySearchTree<Informatiker> tree) {
+		// System.out.println(tree.getContent().getName() + ": " +
+		// tree.getContent().getDay() + "."
+		// + tree.getContent().getMonth() + "." + tree.getContent().getYear());
+		// return false;
+		// }
+		// });
+
+		System.out.println(tree.inorderDebug());
 	}
-	
+
+	/**
+	 * Old method for performing actions on tree filled with morse code
+	 * 
+	 * @param args
+	 */
 	public static void main2(String[] args) {
 		MorseTree binTree = new MorseTree();
 		binTree.setContent("");

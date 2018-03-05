@@ -21,7 +21,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
 	 */
 	private class BTNode<T extends Comparable<T>> {
 
-		private T				content;
+		private T					content;
 		private BinarySearchTree<T>	left, right;
 
 		public BTNode(T pContent) {
@@ -170,22 +170,48 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		return;
 	}
 
-	public List<T> inorder(BinarySearchTree<T> b){
+	public List<T> inorder(BinarySearchTree<T> b) {
 		List<T> output = new ArrayList<>();
-		
+
 		this.inorder(b, new ITraverse<T>() {
 
 			@Override
 			public boolean traverse(BinarySearchTree<T> tree) {
-				if(tree.getContent() != null) {
+				if (tree.getContent() != null) {
 					output.add(tree.getContent());
 				}
 				return false;
-			}});
-		
+			}
+		});
+
 		return output;
 	}
-	
+
+	public String inorderDebug() {
+		StringBuilder builder = new StringBuilder();
+
+		this.inorderDebug(this, builder);
+
+		return builder.toString();
+	}
+
+	private void inorderDebug(BinarySearchTree<T> b, StringBuilder output) {
+		if (!b.isEmpty()) {
+			if (b.getLeftTree() != null) {
+				output.append("\nLeft: [");
+				inorderDebug(b.getLeftTree(), output);
+				output.append("]\n");
+			}
+			output.append("" + b.getContent().toString() + " ");
+			if (b.getRightTree() != null) {
+				output.append("\nRight: [ ");
+				inorderDebug(b.getRightTree(), output);
+				output.append("]\n");
+			}
+		}
+		return;
+	}
+
 	public void postorder(BinarySearchTree<T> b, ITraverse<T> iinterface) {
 		if (!b.isEmpty()) {
 			if (b.getLeftTree() != null) inorder(b.getLeftTree(), iinterface);
@@ -194,32 +220,33 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		}
 		return;
 	}
-	
+
 	public void delete(T value) {
 		this.inorder(this, new ITraverse<T>() {
 
 			@Override
 			public boolean traverse(BinarySearchTree<T> tree) {
-				if(tree.getContent() != null && tree.getContent().equals(value)) {
+				if (tree.getContent() != null && tree.getContent().equals(value)) {
 					BinarySearchTree.this.delete(tree.getContent());
 					return true;
 				}
 				return false;
-			}});
+			}
+		});
 	}
-	
+
 	public void delete(BinarySearchTree<T> value) {
 		BinarySearchTree<T> left = value.getLeftTree();
 		BinarySearchTree<T> right = value.getRightTree();
-		
-		if(left.isEmpty()) return;
-		
+
+		if (left.isEmpty()) return;
+
 		List<T> leftNodes = left.inorder(left);
 		T node = leftNodes.get(leftNodes.size() - 1);
-		
-		leftNodes.stream().max((a,b) -> a.compareTo(b)).ifPresent(System.out::println);
+
+		leftNodes.stream().max((a, b) -> a.compareTo(b)).ifPresent(System.out::println);
 	}
-	
+
 	public void insert(BinarySearchTree<T> b, T input) {
 		if (b.isEmpty()) {
 			b.setContent(input);
