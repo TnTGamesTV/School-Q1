@@ -12,14 +12,14 @@ public class Main {
 
 	public static void main(String[] args) {
 		BinarySearchTree<Informatiker> tree = new BinarySearchTree<>();
+		InformatikerSupplier supplier = new InformatikerSupplier();
 
-		Informatiker i1 = new Informatiker("A", 01, 01, 2000);
-		Informatiker i2 = new Informatiker("B", 01, 01, 1999);
-		Informatiker i3 = new Informatiker("C", 01, 01, 2001);
-
-		tree.insert(i1);
-		tree.insert(i2);
-		tree.insert(i3);
+		tree.insert(supplier.get());
+		tree.insert(supplier.get());
+		tree.insert(supplier.get());
+		tree.insert(supplier.get());
+		tree.insert(supplier.get());
+		tree.insert(supplier.get());
 
 		GraphicalTreeWrapper<Informatiker> wrapper = new GraphicalTreeWrapper<>(tree);
 

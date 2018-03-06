@@ -243,7 +243,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
 		List<T> leftNodes = left.inorder(left);
 		T node = leftNodes.get(leftNodes.size() - 1);
-
+		
 		leftNodes.stream().max((a, b) -> a.compareTo(b)).ifPresent(System.out::println);
 	}
 

@@ -27,6 +27,6 @@ public class IntSupplier {
 	}
 
 	public int get() {
-		return this.generator.nextInt(end + 1) + start;
+		return this.generator.nextInt((end - start) + 1) + start;
 	}
 }

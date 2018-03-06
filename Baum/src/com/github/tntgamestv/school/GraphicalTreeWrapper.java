@@ -2,6 +2,7 @@ package com.github.tntgamestv.school;
 
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.ui.view.Viewer;
 
 /**
  * @author Finn Tegeler
@@ -40,9 +41,22 @@ public class GraphicalTreeWrapper<T extends Comparable<T>> {
 	}
 
 	public void display() {
+		graph.setStrict(true);
+		
+		graph.setAttribute("ui.stylesheet", "node {\r\n" + 
+				"        fill-color: black;\r\n" + 
+				"    }\r\n" + 
+				"    node.marked {\r\n" + 
+				"        fill-color: red;\r\n" + 
+				"    }");
+		
+		graph.addNode(idTree.getContent());
+		graph.getNode(idTree.getContent()).addAttribute("ui.class", "marked");
+		
 		iterate(tree, idTree);
-
-		graph.display();
+		
+		Viewer viewer = graph.display();
+		
 	}
 
 	private void iterate(BinarySearchTree<T> tree, BinarySearchTree<String> idTree) {
