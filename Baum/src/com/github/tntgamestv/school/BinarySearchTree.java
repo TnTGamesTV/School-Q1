@@ -237,14 +237,13 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
 	public void delete(BinarySearchTree<T> value) {
 		BinarySearchTree<T> left = value.getLeftTree();
-		BinarySearchTree<T> right = value.getRightTree();
+		// BinarySearchTree<T> right = value.getRightTree();
 
 		if (left.isEmpty()) return;
 
-		List<T> leftNodes = left.inorder(left);
-		T node = leftNodes.get(leftNodes.size() - 1);
-		
-		leftNodes.stream().max((a, b) -> a.compareTo(b)).ifPresent(System.out::println);
+		// List<T> leftNodes = left.inorder(left);
+		// T node = leftNodes.get(leftNodes.size() - 1);
+
 	}
 
 	public void insert(BinarySearchTree<T> b, T input) {

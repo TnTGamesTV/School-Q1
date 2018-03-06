@@ -20,6 +20,11 @@ public class Main {
 		tree.insert(supplier.get());
 		tree.insert(supplier.get());
 		tree.insert(supplier.get());
+		tree.insert(supplier.get());
+		tree.insert(supplier.get());
+		tree.insert(supplier.get());
+		tree.insert(supplier.get());
+		tree.insert(supplier.get());
 
 		GraphicalTreeWrapper<Informatiker> wrapper = new GraphicalTreeWrapper<>(tree);
 
