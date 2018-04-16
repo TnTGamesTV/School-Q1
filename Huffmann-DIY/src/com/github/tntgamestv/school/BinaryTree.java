@@ -1,5 +1,8 @@
 package com.github.tntgamestv.school;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Mithilfe der generischen Klasse BinaryTree koennen beliebig viele
  * Inhaltsobjekte vom Typ ContentType in einem Binaerbaum verwaltet werden. Ein
@@ -17,19 +20,19 @@ public class BinaryTree<ContentType> {
 	 * nicht-null-Teilbaeume, ggf. leere Teilbaeume hat.
 	 */
 	public static class BTNode<CT> {
-	  
-		private CT content;
-		private BinaryTree<CT> left, right;
+
+		private CT				content;
+		private BinaryTree<CT>	left, right;
 
 		public BTNode(CT pContent) {
-			// Der Knoten hat einen linken und einen rechten Teilbaum, die 
-			// beide von null verschieden sind. Also hat ein Blatt immer zwei 
+			// Der Knoten hat einen linken und einen rechten Teilbaum, die
+			// beide von null verschieden sind. Also hat ein Blatt immer zwei
 			// leere Teilbaeume unter sich.
 			this.content = pContent;
 			left = new BinaryTree<CT>();
 			right = new BinaryTree<CT>();
 		}
-		
+
 	}
 
 	/* ----------- Ende der privaten inneren Klasse -------------- */
@@ -89,9 +92,35 @@ public class BinaryTree<ContentType> {
 				this.node.right = new BinaryTree<ContentType>();
 			}
 		} else {
-		  // Da der Inhalt null ist, wird ein leerer BinarySearchTree erzeugt.
+			// Da der Inhalt null ist, wird ein leerer BinarySearchTree erzeugt.
 			this.node = null;
 		}
+	}
+
+	public List<ContentType> inorder() {
+		List<ContentType> output = new ArrayList<>();
+
+		this.inorder(this, new ITraverse<ContentType>() {
+
+			@Override
+			public boolean traverse(BinaryTree<ContentType> tree) {
+				if (tree.getContent() != null) {
+					output.add(tree.getContent());
+				}
+				return false;
+			}
+		});
+
+		return output;
+	}
+
+	public void inorder(BinaryTree<ContentType> b, ITraverse<ContentType> iinterface) {
+		if (!b.isEmpty()) {
+			if (b.getLeftTree() != null) inorder(b.getLeftTree(), iinterface);
+			if (iinterface.traverse(b)) return;
+			if (b.getRightTree() != null) inorder(b.getRightTree(), iinterface);
+		}
+		return;
 	}
 
 	/**
@@ -173,7 +202,7 @@ public class BinaryTree<ContentType> {
 	 * Binaerbaum leer ist, wird null zurueckgegeben.
 	 * 
 	 * @return linker Teilbaum vom Typ BinaryTree<ContentType> oder null, wenn
-	 * der aktuelle Binaerbaum leer ist
+	 *         der aktuelle Binaerbaum leer ist
 	 */
 	public BinaryTree<ContentType> getLeftTree() {
 		if (!this.isEmpty()) {
@@ -188,7 +217,7 @@ public class BinaryTree<ContentType> {
 	 * Binaerbaum (this) leer ist, wird null zurueckgegeben.
 	 * 
 	 * @return rechter Teilbaum vom Typ BinaryTree<ContentType> oder null, wenn
-	 * der aktuelle Binaerbaum (this) leer ist
+	 *         der aktuelle Binaerbaum (this) leer ist
 	 */
 	public BinaryTree<ContentType> getRightTree() {
 		if (!this.isEmpty()) {
