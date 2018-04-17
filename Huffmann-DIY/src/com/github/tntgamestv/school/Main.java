@@ -12,13 +12,13 @@ import java.util.List;
 public class Main {
 
 	public static void main(String[] args) {
-		String input = "Regenwetter";
+		String input = "Bananenmus";
 
 		HuffmannTree tree = new HuffmannTree(input);
 
 		if (tree.start()) {
 			tree.display();
-
+			
 			HashMap<Character, List<Signal>> mapping = tree.returnResultMappedToChars();
 			mapping.entrySet().stream().forEachOrdered((entry) ->
 			{

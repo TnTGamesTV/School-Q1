@@ -177,10 +177,10 @@ public class HuffmannTree extends BinaryTree<BinaryTree<Data>> {
 			if (b.getLeftTree() != null) {
 				// Add all current chars to mapping
 				currentSignals.add(Signal.SHORT);
-
+				
 				_getResultMappedToChars(b.getLeftTree(), mapping, currentSignals);
 			}
-
+			
 			if (b.getContent().getContent().length() == 1) {
 				mapping.put(b.getContent().getContent().charAt(0), currentSignals);
 			}
@@ -191,6 +191,8 @@ public class HuffmannTree extends BinaryTree<BinaryTree<Data>> {
 
 				_getResultMappedToChars(b.getRightTree(), mapping, currentSignals);
 			}
+			
+			currentSignals.remove(currentSignals.size() - 1);
 		}
 	}
 
