@@ -166,41 +166,31 @@ public class HuffmannTree extends BinaryTree<BinaryTree<Data>> {
 	public HashMap<Character, List<Signal>> returnResultMappedToChars() {
 		HashMap<Character, List<Signal>> mapping = new HashMap<>();
 
-		_getResultMappedToChars(this.resultRootNode, mapping);
+		_getResultMappedToChars(this.resultRootNode, mapping, new ArrayList<>());
 
 		return mapping;
 	}
 
-	private void _getResultMappedToChars(BinaryTree<Data> b, HashMap<Character, List<Signal>> mapping) {
+	private void _getResultMappedToChars(BinaryTree<Data> b, HashMap<Character, List<Signal>> mapping,
+			List<Signal> currentSignals) {
 		if (!b.isEmpty()) {
 			if (b.getLeftTree() != null) {
 				// Add all current chars to mapping
-				b.getContent().getContent().chars().mapToObj((ch) -> (char) ch).forEach((c) ->
-				{
-					_updateMappingForChar(mapping, c, Signal.SHORT);
-				});
+				currentSignals.add(Signal.SHORT);
 
-				_getResultMappedToChars(b.getLeftTree(), mapping);
+				_getResultMappedToChars(b.getLeftTree(), mapping, currentSignals);
+			}
+
+			if (b.getContent().getContent().length() == 1) {
+				mapping.put(b.getContent().getContent().charAt(0), currentSignals);
 			}
 
 			if (b.getRightTree() != null) {
 				// Add all current chars to mapping
-				b.getContent().getContent().chars().mapToObj((ch) -> (char) ch).forEach((c) ->
-				{
-					_updateMappingForChar(mapping, c, Signal.LONG);
-				});
+				currentSignals.add(Signal.LONG);
 
-				_getResultMappedToChars(b.getRightTree(), mapping);
+				_getResultMappedToChars(b.getRightTree(), mapping, currentSignals);
 			}
-		}
-	}
-
-	private void _updateMappingForChar(HashMap<Character, List<Signal>> mapping, Character c, Signal signal) {
-		if (mapping.containsKey(c)) {
-			mapping.get(c).add(signal);
-		} else {
-			mapping.put(c, new ArrayList<>());
-			mapping.get(c).add(signal);
 		}
 	}
 
