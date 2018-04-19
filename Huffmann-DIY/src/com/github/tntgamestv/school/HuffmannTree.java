@@ -14,6 +14,34 @@ import graphical.IGraphicalTreeNodeNamer;
  */
 public class HuffmannTree extends BinaryTree<BinaryTree<Data>> {
 
+	public interface HuffmannCharacaterMappingConsumer {
+
+		void consume(String character, List<Signal> signals);
+	}
+
+	public class HuffmannMapping {
+
+		private HashMap<String, List<Signal>> mapping;
+
+		public HuffmannMapping(HashMap<String, List<Signal>> mapping) {
+			this.mapping = mapping;
+		}
+
+		/**
+		 * @return the mapping
+		 */
+		public HashMap<String, List<Signal>> getMapping() {
+			return mapping;
+		}
+
+		public void forEachOrdered(HuffmannCharacaterMappingConsumer consumer) {
+			mapping.entrySet().stream().forEachOrdered((entry) ->
+			{
+				consumer.consume(entry.getKey(), entry.getValue());
+			});
+		}
+	}
+
 	/* Input */
 	private String						input;
 
@@ -57,11 +85,13 @@ public class HuffmannTree extends BinaryTree<BinaryTree<Data>> {
 	 * Create objects and start prepartion phase
 	 */
 	private void _initialize() {
-		input = input.toUpperCase();
+		input = input.toUpperCase(); // Only upper letters
 
+		// New data structures
 		nodeManagment = new ArrayList<>();
 		nodeCharacterAmountMapping = new HashMap<>();
 
+		// State 1 => Preparing data
 		this._setState(1);
 		this._prepare();
 	}
@@ -74,9 +104,12 @@ public class HuffmannTree extends BinaryTree<BinaryTree<Data>> {
 		// Map input to individual chars with amount
 		input.chars().filter(Character::isAlphabetic).mapToObj(ch -> (char) ch).forEachOrdered((c) ->
 		{
+			// If char has already been mapped
 			if (nodeCharacterAmountMapping.containsKey(c.toString())) {
 				nodeCharacterAmountMapping.put(c.toString(), nodeCharacterAmountMapping.get(c.toString()) + 1);
+				// Map new amount
 			} else {
+				// Map char to amount of 1
 				nodeCharacterAmountMapping.put(c.toString(), 1);
 			}
 		});
@@ -84,11 +117,14 @@ public class HuffmannTree extends BinaryTree<BinaryTree<Data>> {
 		// Create data sets and add them to list (inside of a binary tree)
 		nodeCharacterAmountMapping.entrySet().stream().forEachOrdered((entry) ->
 		{
+			// New data set
 			Data data = new Data(entry.getValue(), entry.getKey());
 
+			// Create new tree and add it to managment list
 			nodeManagment.add(new BinaryTree<Data>(data));
 		});
 
+		// State 2 => Sorting
 		this._setState(2);
 	}
 
@@ -99,8 +135,10 @@ public class HuffmannTree extends BinaryTree<BinaryTree<Data>> {
 	 */
 	public boolean start() {
 		if (state == 3) {
+			// If tree has already been sorted: skip sorting
 			return true;
 		} else if (state < 2) {
+			// If tree is not prepared throw exception
 			this._throwException(
 					"Wrong state for starting (Current state is " + state + "). Something went wrong befor this!");
 			return false;
@@ -133,8 +171,10 @@ public class HuffmannTree extends BinaryTree<BinaryTree<Data>> {
 				});
 			}
 
+			// Link result node
 			resultRootNode = nodeManagment.get(0);
 
+			// State 3 => Finished
 			this._setState(3);
 			return true;
 		}
@@ -146,6 +186,7 @@ public class HuffmannTree extends BinaryTree<BinaryTree<Data>> {
 
 	public void display() {
 		if (state == 3) {
+			// If tree has been sorted create a new GraphicalTreeWrapper
 			GraphicalTreeWrapper<Data> wrapper = new GraphicalTreeWrapper<Data>(resultRootNode,
 					new IGraphicalTreeNodeNamer<Data>() {
 
@@ -158,42 +199,49 @@ public class HuffmannTree extends BinaryTree<BinaryTree<Data>> {
 		}
 	}
 
+	private List<Signal> _getResultForChar(String s) {
+		List<Signal> result = new ArrayList<>();
+
+		this._getResultForChar(resultRootNode, result, new ArrayList<>(), s);
+
+		return result;
+	}
+
+	private void _getResultForChar(BinaryTree<Data> tree, List<Signal> result, List<Signal> tmp, String s) {
+		if (tree.getContent().getContent().equals(s)) {
+			result.addAll(tmp);
+			return;
+		}
+
+		if (tree.getLeftTree() != null && tree.getLeftTree().getContent() != null) {
+			tmp.add(Signal.SHORT);
+			this._getResultForChar(tree.getLeftTree(), result, tmp, s);
+		}
+
+		if (tree.getRightTree() != null && tree.getRightTree().getContent() != null) {
+			tmp.add(Signal.LONG);
+			this._getResultForChar(tree.getRightTree(), result, tmp, s);
+		}
+
+		tmp.remove(tmp.size() - 1);
+	}
+
 	/**
 	 * Returns the code for each char mapped to the char itself
 	 * 
 	 * @return
 	 */
-	public HashMap<Character, List<Signal>> returnResultMappedToChars() {
-		HashMap<Character, List<Signal>> mapping = new HashMap<>();
+	public HashMap<String, List<Signal>> returnResultMappedToChars() {
+		HashMap<String, List<Signal>> mapping = new HashMap<>();
 
-		_getResultMappedToChars(this.resultRootNode, mapping, new ArrayList<>());
+		nodeCharacterAmountMapping.entrySet().stream().forEach((entry) ->
+		{
+			List<Signal> signals = _getResultForChar(entry.getKey());
+
+			mapping.put(entry.getKey(), signals);
+		});
 
 		return mapping;
-	}
-
-	private void _getResultMappedToChars(BinaryTree<Data> b, HashMap<Character, List<Signal>> mapping,
-			List<Signal> currentSignals) {
-		if (!b.isEmpty()) {
-			if (b.getLeftTree() != null) {
-				// Add all current chars to mapping
-				currentSignals.add(Signal.SHORT);
-				
-				_getResultMappedToChars(b.getLeftTree(), mapping, currentSignals);
-			}
-			
-			if (b.getContent().getContent().length() == 1) {
-				mapping.put(b.getContent().getContent().charAt(0), currentSignals);
-			}
-
-			if (b.getRightTree() != null) {
-				// Add all current chars to mapping
-				currentSignals.add(Signal.LONG);
-
-				_getResultMappedToChars(b.getRightTree(), mapping, currentSignals);
-			}
-			
-			currentSignals.remove(currentSignals.size() - 1);
-		}
 	}
 
 	private void _setState(int newState) {

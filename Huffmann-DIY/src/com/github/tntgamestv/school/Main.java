@@ -12,14 +12,14 @@ import java.util.List;
 public class Main {
 
 	public static void main(String[] args) {
-		String input = "Bananenmus";
+		String input = "Regenwetter";
 
 		HuffmannTree tree = new HuffmannTree(input);
 
 		if (tree.start()) {
 			tree.display();
-			
-			HashMap<Character, List<Signal>> mapping = tree.returnResultMappedToChars();
+
+			HashMap<String, List<Signal>> mapping = tree.returnResultMappedToChars();
 			mapping.entrySet().stream().forEachOrdered((entry) ->
 			{
 				System.out.print(entry.getKey().toString() + ":");
@@ -31,6 +31,7 @@ public class Main {
 
 				System.out.println();
 			});
+
 		} else {
 			System.exit(1);
 		}
