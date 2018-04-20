@@ -14,9 +14,9 @@ import graphical.IGraphicalTreeNodeNamer;
  */
 public class HuffmannTree extends BinaryTree<BinaryTree<Data>> {
 
-	public interface HuffmannCharacaterMappingConsumer {
+	public interface HuffmannCharacterMappingConsumer {
 
-		void consume(String character, List<Signal> signals);
+		void consume(String character, SignalList list);
 	}
 
 	public class HuffmannMapping {
@@ -34,14 +34,38 @@ public class HuffmannTree extends BinaryTree<BinaryTree<Data>> {
 			return mapping;
 		}
 
-		public void forEachOrdered(HuffmannCharacaterMappingConsumer consumer) {
+		public void forEachOrdered(HuffmannCharacterMappingConsumer consumer) {
 			mapping.entrySet().stream().forEachOrdered((entry) ->
 			{
-				consumer.consume(entry.getKey(), entry.getValue());
+				consumer.consume(entry.getKey(), new SignalList(entry.getValue()));
 			});
 		}
 	}
-
+	
+	public class SignalList {
+		
+		private List<Signal> input;
+		
+		public SignalList(List<Signal> input) {
+			this.input = input;
+		}
+		
+		public List<Signal> getSignals() {
+			return this.input;
+		}
+		
+		@Override
+		public String toString() {
+			StringBuilder builder = new StringBuilder();
+			
+			input.forEach((signal) -> {
+				builder.append("" + signal.getSymbol());
+			});
+			
+			return builder.toString();
+		}
+	}
+	
 	/* Input */
 	private String						input;
 
@@ -231,7 +255,7 @@ public class HuffmannTree extends BinaryTree<BinaryTree<Data>> {
 	 * 
 	 * @return
 	 */
-	public HashMap<String, List<Signal>> returnResultMappedToChars() {
+	public HuffmannMapping returnMapping() {
 		HashMap<String, List<Signal>> mapping = new HashMap<>();
 
 		nodeCharacterAmountMapping.entrySet().stream().forEach((entry) ->
@@ -241,7 +265,7 @@ public class HuffmannTree extends BinaryTree<BinaryTree<Data>> {
 			mapping.put(entry.getKey(), signals);
 		});
 
-		return mapping;
+		return new HuffmannMapping(mapping);
 	}
 
 	private void _setState(int newState) {

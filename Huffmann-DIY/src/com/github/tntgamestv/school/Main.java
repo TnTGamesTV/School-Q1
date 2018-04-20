@@ -3,9 +3,6 @@
  */
 package com.github.tntgamestv.school;
 
-import java.util.HashMap;
-import java.util.List;
-
 /**
  * @author TnTGamesTV Project: Huffmann-DIY Date: 10-04-2018
  */
@@ -16,24 +13,12 @@ public class Main {
 
 		HuffmannTree tree = new HuffmannTree(input);
 
-		if (tree.start()) {
-			tree.display();
+		tree.start();
+		
+		tree.display();
 
-			HashMap<String, List<Signal>> mapping = tree.returnResultMappedToChars();
-			mapping.entrySet().stream().forEachOrdered((entry) ->
-			{
-				System.out.print(entry.getKey().toString() + ":");
-
-				entry.getValue().forEach((item) ->
-				{
-					System.out.print(item.getSymbol() + " ");
-				});
-
-				System.out.println();
-			});
-
-		} else {
-			System.exit(1);
-		}
+		tree.returnMapping().forEachOrdered((c,s) -> {
+			System.out.println(c + ": " + s.toString());
+		});
 	}
 }
